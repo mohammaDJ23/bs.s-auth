@@ -1,0 +1,48 @@
+POST http://localhost:3001/auth/signup
+Content-Type: application/json
+
+{
+  "firstName": "mohammad",
+  "lastName": "nowresideh",
+  "email": "mohammad.nowresideh1997@gmail.com",
+  "password": "123!@#Ss",
+  "phone": "+989174163042"
+}
+
+###
+
+POST http://localhost:3001/auth/login
+Content-Type: application/json
+
+{
+  "email": "mohammad.nowresideh1997@gmail.com",
+  "password": "123!@#Ss"
+}
+
+###
+
+GET http://localhost:3001/auth
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJtb2hhbW1hZC5ub3dyZXNpZGVoMTk5N0BnbWFpbC5jb20iLCJmaXJzdE5hbWUiOiJtb2hhbW1hZCIsImxhc3ROYW1lIjoibm93cmVzaWRlaCIsImlhdCI6MTY2Mzk1MzU5OCwiZXhwIjoxNjYzOTUzNjU4fQ.Hz1XPlNjqOo9USgJj3w1XSNnixK525-svg1gNHROpSk
+
+###
+
+POST http://localhost:3001/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "mohammad.nowresideh1997@gmail.com"
+}
+
+###
+
+POST http://localhost:3001/auth/reset-password
+Content-Type: application/json
+
+{
+  "password": "123!@#Sss",
+  "confirmedPassword": "123!@#Sss",
+  "token": "$2b$10$cmg8pc1IeFS9rPFpKpPbDu.xwMJD8KuRasksVh2LqNBCkTGScg1n2"
+}
+
+###
+

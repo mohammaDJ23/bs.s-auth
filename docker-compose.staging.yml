@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  s-auth:
+    image: mohammadnowresideh1997/s-auth
+    env_file:
+      - /root/config/s-auth.env.txt
+    container_name: s-auth
+    ports:
+      - 3001:3001
+    networks:
+      - services_app-network
+
+networks:
+  services_app-network:
+    external: true
