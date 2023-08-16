@@ -5,6 +5,7 @@ services:
     env_file:
       - /root/config/s-auth.env.txt
     container_name: s-auth
+    restart: always
     ports:
       - 3001:3001
     networks:
