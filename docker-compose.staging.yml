@@ -1,10 +1,10 @@
 version: '3.8'
 services:
-  s-auth:
-    image: mohammadnowresideh1997/s-auth
+  s-auth-staging:
+    image: mohammadnowresideh1997/s-auth-staging
     env_file:
-      - /root/config/s-auth.env.txt
-    container_name: s-auth
+      - /root/config/s-auth-staging.env.txt
+    container_name: s-auth-staging
     restart: always
     ports:
       - 3001:3001
