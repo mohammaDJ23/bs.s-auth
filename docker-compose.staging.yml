@@ -1,13 +1,13 @@
 version: '3.8'
 services:
   s-auth-staging:
-    image: mohammadnowresideh1997/s-auth-staging
+    image: ${DOCKER_USERNAME}/s-auth-staging
     env_file:
       - /root/config/s-auth-staging.env.txt
     container_name: s-auth-staging
     restart: always
     ports:
-      - 3001:3001
+      - ${PORT}:${PORT}
     networks:
       - services_app-network
 
