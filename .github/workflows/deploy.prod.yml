@@ -53,6 +53,7 @@ jobs:
           command_timeout: 60m
           script: |
             cd app
-            npm run docker:compose:s-auth:prod:down
+            npm run docker:stop:s-auth:prod
+            npm run docker:rm:s-auth:prod
             npm run docker:rmi:s-auth:prod
             npm run docker:compose:s-auth:prod:up
