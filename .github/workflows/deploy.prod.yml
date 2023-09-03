@@ -56,4 +56,4 @@ jobs:
             npm run docker:stop:s-auth:prod
             npm run docker:rm:s-auth:prod
             npm run docker:rmi:s-auth:prod
-            npm run docker:compose:s-auth:prod:up
+            npm run docker:compose:up:s-auth:prod
