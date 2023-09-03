@@ -56,4 +56,4 @@ jobs:
             npm run docker:stop:s-auth:staging
             npm run docker:rm:s-auth:staging
             npm run docker:rmi:s-auth:staging
-            npm run docker:compose:s-auth:staging:up
+            npm run docker:compose:up:s-auth:staging
