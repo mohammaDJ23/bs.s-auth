@@ -42,15 +42,6 @@ export type Exception =
     }
   | string;
 
-export enum RabbitMqServices {
-  AUTH = 'AUTH_SERVICE',
-}
-
-export enum RabbitMqQueue {
-  AUTH = 'auth-queue',
-  USER = 'user-queue',
-}
-
 export interface ClassConstructor {
   new (...args: any[]): {};
 }

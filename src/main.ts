@@ -1,7 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './modules';
 import { Transport, MicroserviceOptions } from '@nestjs/microservices';
-import { RabbitMqQueue } from './types';
 import { swagger } from './libs';
 import { NestExpressApplication } from '@nestjs/platform-express';
 
@@ -14,7 +13,7 @@ async function bootstrap() {
     transport: Transport.RMQ,
     options: {
       urls: [process.env.RABBITMQ_URL],
-      queue: RabbitMqQueue.AUTH,
+      queue: process.env.AUTH_RABBITMQ_QUEUE,
       queueOptions: {
         durable: true,
       },
