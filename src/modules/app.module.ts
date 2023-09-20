@@ -21,7 +21,6 @@ import { join } from 'path';
 import { MailerModule } from '@nestjs-modules/mailer';
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 import { ScheduleModule } from '@nestjs/schedule';
-import { RabbitMqQueue, RabbitMqServices } from '../types';
 import {
   CronJobsController,
   GatewayController,
@@ -34,11 +33,11 @@ import { CurrentUserMiddleWare } from '../middlewares';
   imports: [
     ClientsModule.register([
       {
-        name: RabbitMqServices.AUTH,
+        name: process.env.AUTH_RABBITMQ_SERVICE,
         transport: Transport.RMQ,
         options: {
           urls: [process.env.RABBITMQ_URL],
-          queue: RabbitMqQueue.USER,
+          queue: process.env.USER_RABBITMQ_QUEUE,
           queueOptions: {
             durable: true,
           },

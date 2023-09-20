@@ -1,12 +1,13 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { User } from 'src/entities';
-import { RabbitMqServices, UpdatedUserPartialObj } from 'src/types';
+import { UpdatedUserPartialObj } from 'src/types';
 
 @Injectable()
 export class UserService {
   constructor(
-    @Inject(RabbitMqServices.AUTH) private readonly clientProxy: ClientProxy,
+    @Inject(process.env.AUTH_RABBITMQ_SERVICE)
+    private readonly clientProxy: ClientProxy,
   ) {}
 
   findById(id: number): Promise<User> {
