@@ -3,11 +3,11 @@ import { Cron, CronExpression } from '@nestjs/schedule';
 import { ResetPasswordService } from '../services';
 
 @Controller()
-export class CronJobsController {
+export class ResetPasswordCronJobsController {
   constructor(private readonly resetPasswordService: ResetPasswordService) {}
 
   @Cron(CronExpression.EVERY_5_HOURS)
-  removeResetPasswordTokens(): void {
-    this.resetPasswordService.removeResetPasswordTokens();
+  removeTokens(): void {
+    this.resetPasswordService.removeTokens();
   }
 }

@@ -21,7 +21,7 @@ export class ResetPasswordService {
     private readonly mailerService: MailerService,
   ) {}
 
-  private findResetPasswordByToken(token: string): Promise<ResetPassword> {
+  private findByToken(token: string): Promise<ResetPassword> {
     return this.resetPasswordRepository
       .createQueryBuilder('reset_password')
       .where('reset_password.token = :token', { token })
@@ -71,7 +71,7 @@ export class ResetPasswordService {
     if (actualPassword !== confirmedPassword)
       throw new BadRequestException('The passwords are not equal.');
 
-    const resetPassword = await this.findResetPasswordByToken(body.token);
+    const resetPassword = await this.findByToken(body.token);
     if (!resetPassword) throw new NotFoundException('Provided invalid token.');
 
     const isTokenExpired = new Date() > new Date(resetPassword.expiration);
@@ -99,7 +99,7 @@ export class ResetPasswordService {
     return { message: 'Your password has been changed.' };
   }
 
-  async removeResetPasswordTokens() {
+  async removeTokens() {
     try {
       await this.resetPasswordRepository
         .createQueryBuilder('reset_password')

@@ -32,7 +32,7 @@ export class GoogleController {
   @ApiResponse({ status: HttpStatus.NOT_FOUND, type: ErrorDto })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: ErrorDto })
   @ApiResponse({ status: HttpStatus.INTERNAL_SERVER_ERROR, type: ErrorDto })
-  googleAuthRedirect(
+  loginWithOauth(
     @Res() response: Response,
     @CurrentOauthUser() user: OauthUser,
   ): Promise<void> {
