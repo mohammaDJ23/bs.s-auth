@@ -22,9 +22,9 @@ export class UserService {
       .toPromise();
   }
 
-  updatePartial(updatedUser: UpdatedUserPartialObj): Promise<User> {
+  update(updatedUser: UpdatedUserPartialObj): Promise<User> {
     return this.clientProxy
-      .send<User, UpdatedUserPartialObj>('update_user_partial', updatedUser)
+      .send<User, UpdatedUserPartialObj>('update_user', updatedUser)
       .toPromise();
   }
 }

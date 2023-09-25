@@ -22,12 +22,18 @@ import { MailerModule } from '@nestjs-modules/mailer';
 import { EjsAdapter } from '@nestjs-modules/mailer/dist/adapters/ejs.adapter';
 import { ScheduleModule } from '@nestjs/schedule';
 import {
-  CronJobsController,
-  GatewayController,
+  ResetPasswordCronJobsController,
+  ResetPasswordController,
+  AuthController,
   GoogleController,
 } from '../controllers';
 import { UserService, ResetPasswordService, AuthService } from '../services';
 import { CurrentUserMiddleWare } from '../middlewares';
+import {
+  BaseTransaction,
+  ForgotPasswordTransaction,
+  ResetPasswordTransaction,
+} from 'src/transactions';
 
 @Module({
   imports: [
@@ -87,13 +93,20 @@ import { CurrentUserMiddleWare } from '../middlewares';
     }),
     ScheduleModule.forRoot(),
   ],
-  controllers: [CronJobsController, GatewayController, GoogleController],
+  controllers: [
+    ResetPasswordCronJobsController,
+    ResetPasswordController,
+    AuthController,
+    GoogleController,
+  ],
   providers: [
     UserService,
     ResetPasswordService,
     AuthService,
     JwtStrategy,
     GoogleOauthStrategy,
+    ForgotPasswordTransaction,
+    ResetPasswordTransaction,
     { provide: APP_FILTER, useClass: AllExceptionFilter },
     {
       provide: APP_PIPE,

@@ -15,7 +15,7 @@ export class AuthService {
     private readonly userService: UserService,
   ) {}
 
-  getUserSignInfo(user: User): UserSignInfoObj {
+  signInfo(user: User): UserSignInfoObj {
     return {
       id: user.id,
       email: user.email,
@@ -27,8 +27,8 @@ export class AuthService {
   }
 
   getJwtToken(user: User): TokenDto {
-    const userInfo = this.getUserSignInfo(user);
-    const accessToken = this.jwtService.sign(userInfo);
+    const signInfo = this.signInfo(user);
+    const accessToken = this.jwtService.sign(signInfo);
     return { accessToken };
   }
 
