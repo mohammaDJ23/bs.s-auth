@@ -24,11 +24,12 @@ import { ScheduleModule } from '@nestjs/schedule';
 import {
   ResetPasswordCronJobsController,
   ResetPasswordController,
-  GatewayController,
+  AuthController,
   GoogleController,
 } from '../controllers';
 import { UserService, ResetPasswordService, AuthService } from '../services';
 import { CurrentUserMiddleWare } from '../middlewares';
+import { BaseTransaction, ForgotPasswordTransaction } from 'src/transactions';
 
 @Module({
   imports: [
@@ -91,7 +92,7 @@ import { CurrentUserMiddleWare } from '../middlewares';
   controllers: [
     ResetPasswordCronJobsController,
     ResetPasswordController,
-    GatewayController,
+    AuthController,
     GoogleController,
   ],
   providers: [
@@ -100,6 +101,7 @@ import { CurrentUserMiddleWare } from '../middlewares';
     AuthService,
     JwtStrategy,
     GoogleOauthStrategy,
+    ForgotPasswordTransaction,
     { provide: APP_FILTER, useClass: AllExceptionFilter },
     {
       provide: APP_PIPE,

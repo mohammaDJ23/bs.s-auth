@@ -2,15 +2,17 @@ import {
   Injectable,
   NotFoundException,
   BadRequestException,
+  Inject,
+  forwardRef,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { MailerService } from '@nestjs-modules/mailer';
 import { Repository } from 'typeorm';
 import { hash } from 'bcryptjs';
-import { randomBytes } from 'crypto';
 import { UserService } from './user.service';
 import { MessageDto, ForgotPasswordDto, ResetPasswordDto } from 'src/dtos';
 import { User, ResetPassword } from 'src/entities';
+import { ForgotPasswordTransaction } from 'src/transactions';
 
 @Injectable()
 export class ResetPasswordService {
@@ -19,6 +21,8 @@ export class ResetPasswordService {
     private readonly resetPasswordRepository: Repository<ResetPassword>,
     private readonly userService: UserService,
     private readonly mailerService: MailerService,
+    @Inject(forwardRef(() => ForgotPasswordTransaction))
+    private readonly forgotPasswordTransaction: ForgotPasswordTransaction,
   ) {}
 
   private findByToken(token: string): Promise<ResetPassword> {
@@ -32,37 +36,7 @@ export class ResetPasswordService {
     body: ForgotPasswordDto,
     currentUser: User,
   ): Promise<MessageDto> {
-    const randomString = randomBytes(32).toString('hex');
-    const token = await hash(randomString, 10);
-    const expiration = new Date(
-      new Date().getTime() + +process.env.RESET_PASSWORD_EXPIRATION,
-    );
-
-    await this.resetPasswordRepository
-      .createQueryBuilder()
-      .insert()
-      .into(ResetPassword)
-      .values({ token, expiration, userId: currentUser.id })
-      .execute();
-
-    const mailerOptions = {
-      from: process.env.MAILER_USER,
-      to: currentUser.email,
-      subject: 'Reset password link',
-      template: './resetPassword',
-      context: {
-        firstName: currentUser.firstName,
-        lastName: currentUser.lastName,
-        link: `${process.env.CLIENT_CONTAINER_URL}/auth/reset-password?token=${token}`,
-      },
-    };
-
-    await this.mailerService.sendMail(mailerOptions);
-
-    return {
-      message:
-        'Further information has been sent to your email, please check there.',
-    };
+    return this.forgotPasswordTransaction.run(currentUser);
   }
 
   async resetPassword(body: ResetPasswordDto): Promise<MessageDto> {

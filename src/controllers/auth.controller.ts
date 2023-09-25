@@ -15,7 +15,7 @@ import { TokenSerializerInterceptor } from 'src/interceptors';
 
 @Controller('/api/v1/auth')
 @ApiTags('/api/v1/auth')
-export class GatewayController {
+export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('login')
