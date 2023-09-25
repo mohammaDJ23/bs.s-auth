@@ -29,7 +29,11 @@ import {
 } from '../controllers';
 import { UserService, ResetPasswordService, AuthService } from '../services';
 import { CurrentUserMiddleWare } from '../middlewares';
-import { BaseTransaction, ForgotPasswordTransaction } from 'src/transactions';
+import {
+  BaseTransaction,
+  ForgotPasswordTransaction,
+  ResetPasswordTransaction,
+} from 'src/transactions';
 
 @Module({
   imports: [
@@ -102,6 +106,7 @@ import { BaseTransaction, ForgotPasswordTransaction } from 'src/transactions';
     JwtStrategy,
     GoogleOauthStrategy,
     ForgotPasswordTransaction,
+    ResetPasswordTransaction,
     { provide: APP_FILTER, useClass: AllExceptionFilter },
     {
       provide: APP_PIPE,
