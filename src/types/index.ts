@@ -6,6 +6,7 @@ export interface EncryptedUserObj {
   email: string;
   firstName: string;
   lastName: string;
+  parentId: number;
   role: string;
   expiration: number;
 }
