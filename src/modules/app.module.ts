@@ -1,9 +1,4 @@
-import {
-  Module,
-  ValidationPipe,
-  MiddlewareConsumer,
-  RequestMethod,
-} from '@nestjs/common';
+import { Module, ValidationPipe } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
@@ -28,9 +23,7 @@ import {
   GoogleController,
 } from '../controllers';
 import { UserService, ResetPasswordService, AuthService } from '../services';
-import { CurrentUserMiddleWare } from '../middlewares';
 import {
-  BaseTransaction,
   ForgotPasswordTransaction,
   ResetPasswordTransaction,
 } from 'src/transactions';
@@ -116,13 +109,4 @@ import {
     },
   ],
 })
-export class AppModule {
-  configure(consumer: MiddlewareConsumer) {
-    consumer
-      .apply(CurrentUserMiddleWare)
-      .forRoutes(
-        { path: '/api/v1/auth/login', method: RequestMethod.POST },
-        { path: '/api/v1/auth/forgot-password', method: RequestMethod.POST },
-      );
-  }
-}
+export class AppModule {}

@@ -26,8 +26,20 @@ export enum Roles {
   USER = 'user',
 }
 
-export interface UpdatedUserPartialObj extends Partial<User> {
+export interface PartialUser extends Partial<User> {
   id: number;
+}
+
+export interface UpdatedUserPartialObj {
+  payload: PartialUser;
+}
+
+export interface FindUserByEmailObj {
+  payload: Pick<PartialUser, 'email'>;
+}
+
+export interface FindUserByIdObj {
+  payload: Pick<PartialUser, 'id'>;
 }
 
 export interface Request extends Req {
