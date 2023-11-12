@@ -33,13 +33,19 @@ export class AuthService {
     return { accessToken };
   }
 
-  async login(body: LoginDto, currentUser: User): Promise<TokenDto> {
-    const isPasswordsEqual = await compare(body.password, currentUser.password);
+  async login(payload: LoginDto): Promise<TokenDto> {
+    const user = await this.userService.findByEmail(payload.email);
+
+    if (!user) {
+      throw new NotFoundException('Could not found the user');
+    }
+
+    const isPasswordsEqual = await compare(payload.password, user.password);
 
     if (!isPasswordsEqual)
       throw new NotFoundException(`Could not found the user.`);
 
-    return this.getJwtToken(currentUser);
+    return this.getJwtToken(user);
   }
 
   async loginWithOauth(response: Response, user: OauthUser): Promise<void> {
