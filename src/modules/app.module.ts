@@ -21,8 +21,14 @@ import {
   ResetPasswordController,
   AuthController,
   GoogleController,
+  FirebaseController,
 } from '../controllers';
-import { UserService, ResetPasswordService, AuthService } from '../services';
+import {
+  UserService,
+  ResetPasswordService,
+  AuthService,
+  FirebaseService,
+} from '../services';
 import {
   ForgotPasswordTransaction,
   ResetPasswordTransaction,
@@ -99,11 +105,13 @@ import { FirebaseModule } from 'nestjs-firebase';
     ResetPasswordController,
     AuthController,
     GoogleController,
+    FirebaseController,
   ],
   providers: [
     UserService,
     ResetPasswordService,
     AuthService,
+    FirebaseService,
     JwtStrategy,
     GoogleOauthStrategy,
     ForgotPasswordTransaction,
