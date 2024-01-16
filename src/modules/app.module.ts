@@ -27,9 +27,17 @@ import {
   ForgotPasswordTransaction,
   ResetPasswordTransaction,
 } from 'src/transactions';
+import { FirebaseModule } from 'nestjs-firebase';
 
 @Module({
   imports: [
+    FirebaseModule.forRoot({
+      googleApplicationCredential: join(
+        __dirname,
+        '../',
+        'firebase.config.json',
+      ),
+    }),
     ClientsModule.register([
       {
         name: process.env.AUTH_RABBITMQ_SERVICE,
