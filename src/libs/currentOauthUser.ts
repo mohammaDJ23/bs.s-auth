@@ -4,5 +4,5 @@ import { getRequest } from './request';
 
 export function getCurrentOauthUser(context: ExecutionContext): OauthUser {
   const request = getRequest(context);
-  return request.user;
+  return request.user as OauthUser;
 }
