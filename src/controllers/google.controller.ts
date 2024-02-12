@@ -36,8 +36,6 @@ export class GoogleController {
     @Res() response: Response,
     @CurrentOauthUser() user: OauthUser,
   ): Promise<void> {
-    console.log('inside the redirect route', user);
-
     return this.authService.loginWithOauth(response, user);
   }
 }
