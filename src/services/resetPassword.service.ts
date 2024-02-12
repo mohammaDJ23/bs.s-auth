@@ -2,7 +2,7 @@ import { Injectable, Inject, forwardRef } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { MessageDto, ForgotPasswordDto, ResetPasswordDto } from 'src/dtos';
-import { User, ResetPassword } from 'src/entities';
+import { ResetPassword } from 'src/entities';
 import {
   ForgotPasswordTransaction,
   ResetPasswordTransaction,
@@ -26,15 +26,12 @@ export class ResetPasswordService {
       .getOne();
   }
 
-  async forgotPassword(
-    body: ForgotPasswordDto,
-    currentUser: User,
-  ): Promise<MessageDto> {
-    return this.forgotPasswordTransaction.run(currentUser);
+  async forgotPassword(payload: ForgotPasswordDto): Promise<MessageDto> {
+    return this.forgotPasswordTransaction.run(payload);
   }
 
-  async resetPassword(body: ResetPasswordDto): Promise<MessageDto> {
-    return this.resetPasswordTransaction.run(body);
+  async resetPassword(payload: ResetPasswordDto): Promise<MessageDto> {
+    return this.resetPasswordTransaction.run(payload);
   }
 
   async removeTokens() {

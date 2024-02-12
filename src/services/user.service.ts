@@ -1,7 +1,12 @@
 import { Injectable, Inject } from '@nestjs/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { User } from 'src/entities';
-import { UpdatedUserPartialObj } from 'src/types';
+import {
+  FindUserByEmailObj,
+  FindUserByIdObj,
+  PartialUser,
+  UpdatedUserPartialObj,
+} from 'src/types';
 
 @Injectable()
 export class UserService {
@@ -12,19 +17,23 @@ export class UserService {
 
   findById(id: number): Promise<User> {
     return this.clientProxy
-      .send<User, number>('find_user_by_id', id)
+      .send<User, FindUserByIdObj>('find_user_by_id', { payload: { id } })
       .toPromise();
   }
 
   findByEmail(email: string): Promise<User> {
     return this.clientProxy
-      .send<User, string>('find_user_by_email', email)
+      .send<User, FindUserByEmailObj>('find_user_by_email', {
+        payload: { email },
+      })
       .toPromise();
   }
 
-  update(updatedUser: UpdatedUserPartialObj): Promise<User> {
+  update(payload: PartialUser): Promise<User> {
     return this.clientProxy
-      .send<User, UpdatedUserPartialObj>('update_user', updatedUser)
+      .send<User, UpdatedUserPartialObj>('update_user', {
+        payload,
+      })
       .toPromise();
   }
 }

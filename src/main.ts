@@ -23,13 +23,7 @@ async function bootstrap() {
 
   app.set('view engine', 'ejs');
 
-  app.enableCors({
-    origin: [
-      process.env.CLIENT_CONTAINER_URL,
-      process.env.CLIENT_AUTH_URL,
-      process.env.CLIENT_BANK_URL,
-    ],
-  });
+  app.enableCors({ origin: '*' });
   swagger(app);
   await app.startAllMicroservices();
   await app.listen(process.env.PORT);

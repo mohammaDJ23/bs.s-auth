@@ -13,10 +13,7 @@ import { MessageDto, ResetPasswordDto } from 'src/dtos';
 import { ResetPasswordService, UserService } from 'src/services';
 
 @Injectable()
-export class ResetPasswordTransaction extends BaseTransaction<
-  ResetPasswordDto,
-  MessageDto
-> {
+export class ResetPasswordTransaction extends BaseTransaction {
   constructor(
     dataSource: DataSource,
     private readonly mailerService: MailerService,
@@ -29,14 +26,15 @@ export class ResetPasswordTransaction extends BaseTransaction<
   }
 
   protected async execute(
-    payload: ResetPasswordDto,
     manager: EntityManager,
+    payload: ResetPasswordDto,
   ): Promise<MessageDto> {
-    const actualPassword = payload.password.toString().toLowerCase();
+    const password = payload.password.toString().toLowerCase().trim();
     const confirmedPassword = payload.confirmedPassword
       .toString()
-      .toLowerCase();
-    if (actualPassword !== confirmedPassword)
+      .toLowerCase()
+      .trim();
+    if (password !== confirmedPassword)
       throw new BadRequestException('The passwords are not equal.');
 
     const resetPassword = await this.resetPasswordService.findByToken(

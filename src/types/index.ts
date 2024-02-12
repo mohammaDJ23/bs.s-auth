@@ -6,6 +6,7 @@ export interface EncryptedUserObj {
   email: string;
   firstName: string;
   lastName: string;
+  parentId: number;
   role: string;
   expiration: number;
 }
@@ -25,13 +26,25 @@ export enum Roles {
   USER = 'user',
 }
 
-export interface UpdatedUserPartialObj extends Partial<User> {
+export interface PartialUser extends Partial<User> {
   id: number;
+}
+
+export interface UpdatedUserPartialObj {
+  payload: PartialUser;
+}
+
+export interface FindUserByEmailObj {
+  payload: Pick<PartialUser, 'email'>;
+}
+
+export interface FindUserByIdObj {
+  payload: Pick<PartialUser, 'id'>;
 }
 
 export interface Request extends Req {
   currentUser: User;
-  user: undefined | OauthUser;
+  user: undefined | OauthUser | User;
 }
 
 export type Exception =
