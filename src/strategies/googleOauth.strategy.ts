@@ -15,13 +15,6 @@ export class GoogleOauthStrategy extends PassportStrategy(Strategy, 'google') {
   }
 
   async validate(accessToken: string, refreshToken: string, profile: Profile) {
-    console.log(
-      'inside the googleOauth strategy',
-      accessToken,
-      refreshToken,
-      profile,
-    );
-
     const [email] = profile.emails;
 
     if (!email)
@@ -36,11 +29,6 @@ export class GoogleOauthStrategy extends PassportStrategy(Strategy, 'google') {
 
     const oauth2Client = new OAuth2Client();
     const oauthTokenInfo = await oauth2Client.getTokenInfo(accessToken);
-
-    console.log(
-      'inside the googleOauth strategy after the token info',
-      oauthTokenInfo,
-    );
 
     return {
       id: profile.id,
