@@ -49,11 +49,7 @@ export class AuthService {
   }
 
   async loginWithOauth(response: Response, user: OauthUser): Promise<void> {
-    console.log('inside the loginWithOauth');
-
     const findedUser = await this.userService.findByEmail(user.email);
-
-    console.log('inside the loginWithOauth after finding the user', findedUser);
 
     if (!findedUser) {
       response.render('pages/failOauth', {
