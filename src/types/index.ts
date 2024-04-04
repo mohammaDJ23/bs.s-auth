@@ -44,7 +44,7 @@ export interface FindUserByIdObj {
 
 export interface Request extends Req {
   currentUser: User;
-  user: undefined | OauthUser;
+  user: undefined | OauthUser | User;
 }
 
 export type Exception =

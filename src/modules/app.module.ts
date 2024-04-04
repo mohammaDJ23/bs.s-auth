@@ -3,7 +3,6 @@ import { ConfigModule } from '@nestjs/config';
 import { PassportModule } from '@nestjs/passport';
 import { APP_FILTER, APP_PIPE } from '@nestjs/core';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AllExceptionFilter } from '../filters';
 import { JwtModule } from '@nestjs/jwt';
 import {
   JwtStrategy,
@@ -21,15 +20,36 @@ import {
   ResetPasswordController,
   AuthController,
   GoogleController,
+  FirebaseController,
 } from '../controllers';
-import { UserService, ResetPasswordService, AuthService } from '../services';
+import {
+  UserService,
+  ResetPasswordService,
+  AuthService,
+  FirebaseService,
+} from '../services';
 import {
   ForgotPasswordTransaction,
   ResetPasswordTransaction,
 } from 'src/transactions';
+import { FirebaseModule } from 'nestjs-firebase';
+import {
+  AllExceptionFilter,
+  HttpExceptionFilter,
+  ObjectExceptionFilter,
+  QueryExceptionFilter,
+  RpcExceptionFilter,
+} from 'src/filters';
 
 @Module({
   imports: [
+    FirebaseModule.forRoot({
+      googleApplicationCredential: join(
+        __dirname,
+        '../',
+        'firebase.config.json',
+      ),
+    }),
     ClientsModule.register([
       {
         name: process.env.AUTH_RABBITMQ_SERVICE,
@@ -91,16 +111,22 @@ import {
     ResetPasswordController,
     AuthController,
     GoogleController,
+    FirebaseController,
   ],
   providers: [
     UserService,
     ResetPasswordService,
     AuthService,
+    FirebaseService,
     JwtStrategy,
     GoogleOauthStrategy,
     ForgotPasswordTransaction,
     ResetPasswordTransaction,
     { provide: APP_FILTER, useClass: AllExceptionFilter },
+    { provide: APP_FILTER, useClass: ObjectExceptionFilter },
+    { provide: APP_FILTER, useClass: HttpExceptionFilter },
+    { provide: APP_FILTER, useClass: RpcExceptionFilter },
+    { provide: APP_FILTER, useClass: QueryExceptionFilter },
     {
       provide: APP_PIPE,
       useValue: new ValidationPipe({
