@@ -1,1 +1,4 @@
-RabbitMQ dashboard: http://localhost:15672/#/queues/%2F/user-messages
+### The Authentication Microservice Of The BS Project
+
+[See the project](https://bshub.ir)\
+[Full source code](https://github.com/mohammaDJ23/bs)
