@@ -74,7 +74,7 @@ import {
         database: process.env.DATABASE_NAME,
         namingStrategy: new CustomNamingStrategy(),
         entities: [ResetPassword],
-        synchronize: true,
+        synchronize: process.env.NODE_ENV === 'development',
       }),
     }),
     TypeOrmModule.forFeature([ResetPassword]),
